@@ -1,0 +1,209 @@
+shell -->   & = executa l'ordre en segon pla, et deixa fer mes cosses en la taula de comandes mentres s'executa la primera ordre
+            ; =  enumera ordres ( ordre-1; ordre-2; ordre-3)
+            | =  exemple: odre1| ordre2 == la ordre 1 se executa, i el resultat es marca en l'odre 2, quan es faja l'odre 2, en pantalla es mostrarà(si ix bé) el resusltat de les dues comandes
+            ` ` = es al revés que la |(pipeline)
+            && =  si la primera ordre funciona, imprimix-me l'altra
+            || = si la ordre 1 falla , fes la ordre 2
+
+
+        
+
+history -- > historial de les comandes utilitzades
+
+            !ordre = executa l'odre que comencé pel valor especificat, però sols vuic l'última ordre
+            !! = executa l'ordre anterior.
+            !? =  !?cp e/? ( els interrogants tenen un carácter delimitador ). En aquesta comanda li diu lo contrari a "!" , es a dir, fes-me la primera acció que comenci per la cadena-valor que va entre els dos interrogants.
+
+
+
+
+
+            -n : numero de linees
+            -a : añade los comandos de la sesio actual al historial
+            -c : borra todo el historial
+            -d "argumentos": bora ese tal argumento, que se debera reperesentar con el código de proceso (valor numérico)
+
+
+Variables--- ¿Cóm es crea una variable?  x=345 ; aixo es una variable, es important que el igual estiga junt del valor
+
+    quitar variables =  unset (variable) --> para quitar solo esa variable // unset --> para quitar todas las variables que hemos definido en la sesión
+    para referirse a una variable, como per exemple amb l'odre echo; tindrem que fer-ho amb el síbol del dollar($), per exemple: echo $variable_local (lo pongo en duda)
+
+    Variables predefinidas:
+        HOME: defineix el directori personal, on es trobarà i quin serà
+        PATH: per a que el SO sapia on estan les ordres o els programes executables
+        PS1: Prompt , defineix el nom del usuari, el host, i altres coses
+        TMOUT: el temps que tardarà en tancar el terminal si no se esta utilitzant. Normalment esta predefinit a 0, per a què no es tanque. ¡POSAR RETURN NO TORNA EL VALOR A 0!
+        $$: SABER EL PID o identificador de processo que se esta ejecutando ahora en el terminal
+
+
+     EN EL CAS DE DEFINIR UNA VARIABLE PER SEMPRE, ENCARA QUE IXCAM DE LA SESSIÓ DE LA TERMINAL, I QUE AQUESTA PERDURE, TINDREM QUE ACCEDIR AL DOCUMENT ====== bash.bashrc . I AL FINAL DEL TOT ESCRIURE LA VARIABLE (p.exe: PATH=lo_que_siga)
+
+
+    UN ALTRA FORMA PER GUARDAR AQUESTA VARIABLE "local"  EN VARIABLE "de entorno"  === export (nom de variable)
+
+    PATH: ¿Com canviar per a que execute un programa que no esta allotjat  en la llista de directoris que ve predeterminada? canviant la variable. Ja hem dit que canviar una variable sense modificar ningun fitxer, sols donant-li un valor
+    únic que fa es definir la variable temporalment, podriem dir PATH=/directori_on_vuic_executar_un_programa/. Pero açò sols faria que en la mateixa sessió et carregaries totes les altres rutes, desde les que linux utilitza per a
+    instal·lar programes i la sobreescriuries amb la teua nova variable. Si ell que vols fer es incloure una nova ruta per als programes, el unic que deus de fer es fer-ho així: PATH=$PATH:/directori_desitjat.
+
+
+Metacaràcters---- son comodins que ens permenten acurtar comandes que ens referencien a altres arxius o directoris.
+
+? = 1 carácter ; ??? = 3 caràcters
+
+[] = dins es pot definir un range de carácters. ÉS KEY SENSITIVE , ES A DIR, SI TÚ FIQUES a minúscula, sols et búscara "a" minúscules. En canvi si busques "!a" -> et traurà tot menys la "a", però sí et traurà la "A".
+
+    Anem a provar com funcionen junts: [x-y]?? - Es mostrara els carácters que estiguen en el rangue de x a y ; Y que tinguen tan sols 2 caràcters. Es interessant perquè es un filtre de les dues obligacions , es deuen de cumplir les
+    dos , no pot cumplir-se sols 1, es un AND , (no un OR).
+
+
+
+    [!x-y] ----> Te esta diguent el contrari, buscam fitxers que no comencen pel rangue de caràcters que x-y. INCLOU TAMBÉ ELS CARÀCTERS DELS EXTREMS, es a dir la x i la y tambè pàrticipen de cerca.
+
+    [x]* ---> El asterisco simbolitza qualsevol cossa. Ahí ens està dient. Tots els arxius. SOLS ARXIUS . que comencin per x. També es pot fer en rangue.
+
+
+DINS DELS CORCHETES PODEM UTILITZAR LES CLASSES, van definides així: [[:classe:]]. Hi han unes quantes, però la que te que ixir en el exàmen es [[:lower:]] --> que es per a minúscules, i , [[:upper:]] ---> que es per a majúscules
+
+Exemples:   ls [[:lower:]]* ---> llista tots els arxius que comencin per minúscula.
+            ls [[:lower:]]*[[:upper:]] ---> llista tots els arxius que comencin per minúscula i acaben en mayúscula.
+
+
+* ---> Substitueix "n" carácters, EXCEPTE UN PRIMER PUNT (.)
+
+
+
+ALIES---> ens permet captar la sortida d'una ordre i definir eixa sortida a una variable
+    alias: ordre que ens indica el total d'alies que hi han en total
+    unalias (alias): ordre que permet esborrar un alies que hem creat
+
+    
+
+
+
+REDIRECCIÓNS:
+ "<" -- redirecció d'entrada -- stdin
+ ">" -- redirecció de sortida -- stdout
+ "2>" -- redirecció de errada -- stderr || si no volem redirigir-ho Cap a un directori en especific, ho pots dirigir a /dev/null ( que es  com un forat negre )
+
+ >> or << enlloc de sobreescriure la informació del arxiu, afegix la  informació  en el fitxer
+
+
+
+
+
+
+PROMPT--- Personalització del prompt. Pots o fer una variable que et canvie  el Prompt en la sessió en la que estas o pots introdüir aquesta variable en el bash.bashrc
+        PS1="el que siga" ; echo $PS1 ..... el que siga
+
+ORDRES BÀSIQUES:
+
+exit: finalitza sessiò i tanca el terminal
+who: ens llista els usuaris que hi han connectats (+ en el terminal on es troven + la data quan va accedir al terminal)
+who  [am i]: ens indica el usuari que som
+write "usuari": envia un missatge al usuari
+mesg : habilita el poder enviar missatges
+mesg -n: inhabilita el poder enviar missatges
+date: mostra la data actual (+%d-dia +%m-mes +%y-any +%r-hora +%w-dia de la setmana)(I si ho fiques en majúscula et traurà la versió sancerà, no la abreviada)
+    Es molt important que per a construir una frase amb aquests comodin precedits de "%", tingues el date +"lo que siga", necessites les cometes per a especificar que es una cadena de text.
+
+cal: et mostra el calendari (cal)
+ cal any: et mostra el calendari del any que tu digues (cal 2002)
+  cal mes any: et mostra el calendari del any que tu digues, i del més que tú digues (cal 12 2002)
+
+uname: es fa servir per obtenir informació del sistema.
+
+-a, --all : ens mostra tota la informació
+-m, ....
+
+
+PASWWD: ens permet canviar la contrasenya. Per exemple: passwd usuari1
+
+CLEAR: netejar la pantalla
+
+Script: guarda tot el registre en un fitxer, podries dirigir la informació del script cap  a un fitxer que tu elegisques amb ">", i en el cas de que no vuigues sobreescriure-l, pots fer ">>" per afegir la informació de forma adicional.
+man: et mostra el manual d'una comanda. Per exemple: man cp
+
+
+---------------------------------------------------------------------------------------------------PARTE 2-----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+ORDRES BÀSIQUES: 
+
+
+CD: s'utilitza per a moures entre directoris
+    .. --> ens envia al directori pare
+    /etc --> anem al directori /etc, que esta en el directori pare
+    ../etc--> accés al directori /etc mitjaçànt una ruta relativa
+
+
+ls: llistar elements
+    ls- F[/(directoris)@(enllàç simbòlic)*(executable)=(socket, arxiu especial per a la comunicació en la xarxa)|(pipe, arxiu especial per a comunicar programes)
+ls -l: dona la informació mes extensa possible
+
+ls -la: ademés que dona la informació mes extensa possible, també et dona els directoris i fitxers ocults
+ls -a : ens permet veure tots els arxius, inclòs els ocults
+ls -ld directori: ens permet veure les propietats del directori
+ls -R directori: ens permet fer una búsqueda recursiva, es a dir, quan busques un directori, també opté la informació dels subdirectoris.
+
+
+pwd: saber la ruta absoluta d'on estic   
+mkdir: crea un directori ( si no especifiques la ruta, el directori el fa en la mateixa ruta on estàs)
+rmdir: esborra un directory (el mateix, si no li especifiques una ruta, t'esborrara els directoris d'on estàs)
+
+
+nano:editor de text (com vim, o gedit)
+cat: es fa per veure el contingut d'un arxiu
+more: et mostra la informaciò ordenada per pantalles
+head: et mostra les primeres 10 linees d'un document
+tail: et mostra les 10 últimes linees d'un document
+cp: copia arxius  a un altre directorie. Per exemple: cp /home/choverivan/asunto1 /home/choverivan/asuntos/
+    EN EL CAS DE QUE LA RUTA ANARÀ CAP A UN ARXIU, ESTE EL SOBREESCRIURÀ I REBRÀ EL NOM DE LA RUTA QUE HAS ESPECIFICAT
+
+mv: es moure, enlloc de copiar, mou, simple. Pot passar el mateix que en l'ordre cp.
+
+rm: esborra fitxers.
+rm -r: esborra tots els fitxers dels subdirectoris recursius.
+touch: crea documents en el directori on estàs.
+dd: s'empra per copiar sectors d'un disc dur a un altre.
+chmod: estableix permissos a un directori o a un arxiu
+umask: estableix una màscara per als permissos.
+whereis: ens indica on es troba una ordre.
+id: torna el uid del usuari actual i el gid dels grups als que pertany
+su: per connectar-se amb un altre usuari
+sudo: per realitzar una acció com a administrador
+newgrp: ens permet canviar el identificador de grup.
+
+--------------------------------------------------------------------------------------------------ORDRES ESPECÍFIQUES------------------------------------------------------------------------------------------------------------------------
+
+GREP: serveix per fer una cerca d'un document o dins d'un mateix document.
+
+Per exemple, si volem buscar una cadena de textos dins d'un fitxer, el que deurem de fer segurament es: grep "cadena de text" fitxer
+
+Opcions:
+            -r: recursiva, mirara dins dels fitxers del directori on estas, incloent els altres directoris que habiten en ell, per exemple: grep -r /directory/subdirectory
+            -i: es convertieix en NO key sensitive
+            -A (n): mostra les linees seguents després de la linea que has trobat, per exemple: grep -A 3 "el guardian" "el guardian entre el centeno" === EL GUARDIAN ..... + 3 linees més 
+
+
+Metacaràcters especials:
+                            * --> tot el que sigui , es a dir, n
+                            ^ --> simbolitza el començament, quan fiquem: grep ^g fitxer. volem dir, que ens busque totes les paraules que comencen per "g" en el "fitxer"
+                            ~./ --> estableix una ruta relativa, al directori que apunte
+                            
+                            
+
+
+PS: trobar processos oberts i averiguar ell seu PID ( id de procès )
+    ps ax --> processos oberts actualment
+    ps aux --> el mateix que el de dalt però amb més informació
+
+
+
+
+
+
+
+
